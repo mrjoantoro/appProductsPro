@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { timeout } from 'rxjs';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-auth',
@@ -12,12 +14,16 @@ export class AuthPage implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
+  utilsSvc = inject(UtilsService);
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  submit(){
-    console.log(this.form.value);
+  async submit(){
+    if(this.form.valid){
+      console.log(this.form.value);
+    }
   }
 }
