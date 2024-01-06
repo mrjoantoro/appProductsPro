@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { timeout } from 'rxjs';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -23,7 +22,9 @@ export class AuthPage implements OnInit {
 
   async submit(){
     if(this.form.valid){
-      console.log(this.form.value);
+      const user = this.form.value.email;
+      this.utilsSvc.saveInLocalStorage('user', user);
+      this.utilsSvc.routerLink('/main/home');  
     }
   }
 }
