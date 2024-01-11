@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   urlBase: 'http://localhost:3000/api',
   endpoints: {
-    users: '/users',
-    tasks: '/tasks',
+    users: 'users',
+    tasks: 'tasks',
   },
 };
 

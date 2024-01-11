@@ -1,7 +1,8 @@
-import { ApiService } from '../../../services/api.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.model';
+import { ApiService } from '../../../services/api.service'; 
+import { UtilsService } from 'src/app/services/utils.service';
+import { User } from 'src/app/models/user.model'; 
 
 @Component({
   selector: 'app-sign-up',
@@ -15,24 +16,31 @@ export class SignUpPage implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(4)]),
   });
 
-  apiService = inject(ApiService);
+  constructor(
+    private apiService: ApiService,
+    private utilsSvc: UtilsService
+    ) { }
 
-  constructor() { }
 
-  ngOnInit() {
-  } 
+  ngOnInit() {}
 
   submit() {
-    console.log(this.form.value);
-    this.apiService.createUser(this.form.value as User).subscribe(
-      response => {
-        console.log('User created successfully:', response);
-        // Realiza las acciones necesarias después de almacenar el usuario
-      },
-      error => {
-        console.error('Error creating user:', error);
-        // Realiza las acciones necesarias en caso de error
-      }
-    );
+    if (this.form.valid) {
+      this.apiService.createUser(this.form.value as User)
+      .subscribe(
+        response => {
+          console.log('User created successfully:', response);
+          this.utilsSvc.saveInLocalStorage('user', response);
+          this.utilsSvc.routerLink('/main/home');
+        },
+        error => {
+          console.error('Error creating user:', error);
+          // Acciones en caso de error
+        }
+      );
+    } else {
+      console.error('Form is invalid');
+      // Acciones en caso de formulario inválido
+    }
   }
 }

@@ -9,7 +9,6 @@ import { SignUpPageRoutingModule } from './sign-up-routing.module';
 import { SignUpPage } from './sign-up.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -19,7 +18,6 @@ import { HttpClientModule } from '@angular/common/http';
     IonicModule,
     SignUpPageRoutingModule,
     SharedModule,
-    HttpClientModule
   ],
   declarations: [SignUpPage]
 })
